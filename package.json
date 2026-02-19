@@ -10,6 +10,7 @@
     "db:migrate": "node scripts/migrate.js"
   },
   "dependencies": {
+    "dodopayments": "^2.19.1",
     "mammoth": "^1.11.0",
     "next": "16.1.6",
     "openai": "^6.22.0",

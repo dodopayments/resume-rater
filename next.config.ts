@@ -2,7 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  serverExternalPackages: ["pdf-parse", "mammoth"],
+  // Ensure these native/SDK packages are not bundled into the standalone server build
+  serverExternalPackages: ["pdf-parse", "mammoth", "dodopayments"],
 };
 
 export default nextConfig;

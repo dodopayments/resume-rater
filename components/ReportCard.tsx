@@ -40,8 +40,8 @@ export default function ReportCard({ sessionId, report, paid }: Props) {
       body: JSON.stringify({ sessionId }),
     });
     const data = await res.json();
-    if (data.checkoutUrl) {
-      window.location.href = data.checkoutUrl;
+    if (data.checkout_url) {
+      window.location.href = data.checkout_url;
     } else {
       alert("Checkout not available yet.");
       setUnlocking(false);
