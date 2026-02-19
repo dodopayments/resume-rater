@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ResumeForm from "@/components/ResumeForm";
 import ReportCard from "@/components/ReportCard";
 
@@ -10,14 +10,39 @@ export default function Home() {
     report: object;
     paid: boolean;
   } | null>(null);
+  const [recovering, setRecovering] = useState(true);
+
+  // After Dodo redirects back, URL will have ?session=<id>
+  // Fetch the session to show the now-unlocked full report
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session");
+    if (!sessionId) {
+      setRecovering(false);
+      return;
+    }
+
+    fetch(`/api/session/${sessionId}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.report) {
+          setResult({ sessionId: data.sessionId, report: data.report, paid: data.paid });
+          // Clean the URL without reloading
+          window.history.replaceState({}, "", "/");
+        }
+      })
+      .finally(() => setRecovering(false));
+  }, []);
 
   function handleResult(sessionId: string, report: object, paid: boolean) {
     setResult({ sessionId, report, paid });
   }
 
+  if (recovering) return null;
+
   return (
     <main className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Resume Rater</h1>
           <p className="text-gray-500 mt-2">

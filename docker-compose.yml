@@ -15,16 +15,5 @@ services:
       timeout: 5s
       retries: 5
 
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/resume_rater
-      FIREWORKS_API_KEY: ${FIREWORKS_API_KEY}
-    depends_on:
-      postgres:
-        condition: service_healthy
-
 volumes:
   pgdata:

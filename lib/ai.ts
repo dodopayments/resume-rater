@@ -49,7 +49,7 @@ Return ONLY valid JSON matching this exact structure:
 }`;
 
   const response = await getClient().chat.completions.create({
-    model: "accounts/fireworks/models/llama-v3p1-70b-instruct",
+    model: "accounts/fireworks/models/deepseek-v3p1",
     messages: [{ role: "user", content: prompt }],
     temperature: 0.3,
     response_format: { type: "json_object" },
